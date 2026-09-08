@@ -32,16 +32,18 @@
         
         color: var(--color-parchment);
         display: flex;
-        justify-content: center;
         align-items: center;
         min-height: 100vh;
         overflow: hidden;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin: 0;
     }
 
     /* Device Container Frame */
     .app-container {
-      width: 95%;
-      max-width: 600px;
+      width: 100%;
+      max-width: 480px;
       height: 95vh;
       max-height: 950px;
       background: rgba(0, 0, 0, 0.35);
@@ -501,12 +503,18 @@
       letter-spacing: 0.5px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
+
+    .site-footer {
+        text-align: center;
+        padding: 15px 10px;
+        font-size: 0.8rem;
+        color: #d4af37;
+        width: 100%;
+        max-width: 480px;
+    }
   </style>
 </head>
-<body>
-
-  <div class="app-container">
-    
+<div class="app-container">
     <!-- MAIN MENU SCREEN -->
     <div id="menu-screen" class="menu-screen">
         <h1 class="app-title">PENTE</h1>
@@ -536,7 +544,6 @@
     <!-- GAME SCREEN -->
     <div id="game-screen" class="game-screen hidden">
       
-      <!-- Top Cards Section -->
       <!-- Top Cards Section -->
       <div class="score-cards-container">
         <div class="team-box team1">
@@ -603,7 +610,13 @@
         </div>
     </footer>
 
-  </div>
+  </div> <!-- Closes app-container -->
+
+  <footer class="site-footer">
+    <p>&copy; 2026 André Encarnação. All rights reserved.</p>
+  </footer>
+
+</body>
 
   <script>
     let gameState = {
