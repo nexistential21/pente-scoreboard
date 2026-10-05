@@ -1,0 +1,313 @@
+:root {
+  --color-wood-dark: #2C1E16;
+  --color-gold: #D4AF37;
+  --color-parchment: #F9F6F0;
+  --color-red-btn: #5A1212;
+  --color-green-btn: #084B1A;
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;
+  background-color: #0a1811;
+}
+
+body {
+  background-image: url('background_top.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--color-parchment);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.app-container {
+  width: 95%;
+  max-width: 480px;
+  flex: 1;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(1px);
+  overflow: hidden;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.hidden { display: none !important; }
+
+/* Menu Screen */
+.menu-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 3vh;
+}
+
+.app-title {
+  font-size: clamp(3rem, 12vw, 4rem);
+  font-weight: 800;
+  color: gold;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  letter-spacing: 2px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.app-subtitle {
+  font-size: clamp(0.75rem, 3vw, 0.85rem);
+  color: var(--color-parchment);
+  opacity: 0.85;
+  text-align: center;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+}
+
+.input-group {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.glass-input {
+  width: 100%;
+  padding: clamp(10px, 3vh, 14px) 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  color: var(--color-parchment);
+  font-size: 1rem;
+  outline: none;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.2s;
+}
+
+.glass-input::placeholder { color: rgba(249, 246, 240, 0.5); }
+.glass-input:focus { border-color: var(--color-gold); }
+
+.wood-btn {
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  color: var(--color-parchment);
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+  transition: transform 0.1s, filter 0.2s;
+}
+
+.wood-btn:active { transform: scale(0.97); }
+.btn-green { background: linear-gradient(135deg, #0b6623, var(--color-green-btn)); }
+
+.btn-start {
+  width: 85%;
+  height: clamp(50px, 8vh, 60px);
+  margin-top: 10px;
+}
+
+.full-width-btn { width: 100%; height: 50px; }
+
+/* Game Screen */
+.game-screen {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.score-cards-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.team-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 45%;
+}
+
+.team-name {
+  width: 100%;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  text-align: center;
+  color: gold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-deck {
+  width: clamp(80px, 25vw, 105px);
+  height: clamp(110px, 35vw, 145px);
+  background: #fdfcf9;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(3rem, 10vw, 4.2rem);
+  font-weight: 900;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.6), inset 0 0 15px rgba(212, 175, 55, 0.1);
+}
+
+.card-deck::before, .card-deck::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #f4f3ef;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 14px;
+}
+.card-deck::before { top: 6px; right: -6px; z-index: -1; transform: rotate(4deg); }
+.card-deck::after { top: 8px; left: -5px; z-index: -2; transform: rotate(-3deg); }
+
+.card-suit { position: absolute; font-size: clamp(1.2rem, 5vw, 2rem); line-height: 1; }
+.card-suit.top-left { top: 8px; left: 10px; }
+.card-suit.bottom-right { bottom: 8px; right: 10px; transform: rotate(180deg); }
+
+.team1 .card-deck { color: #1a1a1a; }
+.team2 .card-deck { color: #B22222; }
+
+.canvas-container {
+  width: 100%;
+  background-image: url('background_button.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  padding: 5px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+  margin: 2vh 0;
+  flex: 1; 
+  max-height: 80px;
+  min-height: 50px;
+  display: flex;
+}
+
+canvas { width: 100%; height: 100%; display: block; }
+
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 2vh;
+}
+
+.action-col { display: flex; flex-direction: column; gap: 8px; }
+
+.score-btn {
+  height: clamp(40px, 7vh, 48px);
+  background-image: url('background_button.png');
+  background-size: cover;
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  color: var(--color-parchment);
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.score-btn:active { transform: scale(0.98); }
+
+.utility-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 2vh;
+}
+
+.util-btn {
+  flex: 1;
+  height: clamp(40px, 7vh, 50px);
+  border-radius: 14px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.btn-new-game { background: var(--color-green-btn); border: 1px solid rgba(255,255,255,0.1); }
+.btn-undo { background: var(--color-red-btn); border: 1px solid rgba(255,255,255,0.1); }
+
+/* Dialog Modals & Toasts */
+.modal-overlay {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(2px);
+  display: flex; justify-content: center; align-items: center; z-index: 1000; border-radius: 20px;
+}
+.game-over-modal {
+  background: rgba(26, 18, 11, 0.92); border: 2px solid var(--color-gold);
+  border-radius: 16px; padding: 25px; width: 85%; max-width: 320px; text-align: center;
+}
+.modal-title { color: var(--color-gold); margin-bottom: 15px; }
+.install-body { font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; text-align: left; }
+
+.dialog-box {
+  width: 85%; background: var(--color-wood-dark); border-radius: 24px; padding: 24px;
+  border: 1px solid var(--glass-border); text-align: center;
+}
+.dialog-title { color: var(--color-gold); font-size: 1.3rem; font-weight: bold; margin-bottom: 12px; }
+.dialog-text { color: var(--color-parchment); font-size: 0.95rem; line-height: 1.4; margin-bottom: 20px; white-space: pre-wrap; }
+.dialog-buttons { display: flex; gap: 12px; }
+.dialog-btn { flex: 1; padding: 12px; border-radius: 12px; background: transparent; font-weight: bold; cursor: pointer; }
+.dialog-btn-sim { border: 1px solid var(--color-gold); color: var(--color-gold); }
+.dialog-btn-nao { border: 1px solid var(--glass-border); color: var(--color-parchment); }
+
+.pwa-toast {
+  background: rgba(212, 175, 55, 0.15); border: 1px solid var(--color-gold);
+  color: var(--color-parchment); padding: 10px 14px; border-radius: 10px; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: space-between; width: 85%;
+  backdrop-filter: blur(4px); z-index: 50; margin-top: 15px; cursor: pointer;
+}
+.pwa-close-btn { background: none; border: none; color: var(--color-gold); font-weight: bold; padding: 0 4px; cursor: pointer; }
+
+/* Footers */
+.app-footer {
+  width: calc(100% + 32px);
+  margin: auto -16px -16px -16px; 
+  padding: 10px 12px;
+  background: rgba(18, 12, 7, 0.95);
+  border-top: 1px solid rgba(212, 175, 55, 0.25);
+  display: flex; justify-content: center; align-items: center;
+  flex-shrink: 0; z-index: 40; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
+}
+.ad-container {
+  width: 100%; max-width: 468px; height: 50px; background: rgba(0, 0, 0, 0.4);
+  border: 1px dashed rgba(212, 175, 55, 0.3); border-radius: 8px;
+  display: flex; justify-content: center; align-items: center;
+}
+
+.site-footer {
+  text-align: center; padding: 8px 10px; font-size: 0.75rem; color: #d4af37;
+  width: 100%; max-width: 480px; flex-shrink: 0;
+}
