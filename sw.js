@@ -1,5 +1,5 @@
 // sw.js
-const CACHE_NAME = 'pente-v2';
+const CACHE_NAME = 'pente-v3'; // Mudado para v3 para limpar a cache antiga
 const ASSETS = [
   '/',
   '/index.html',
@@ -7,12 +7,27 @@ const ASSETS = [
   '/app.js',
   '/manifest.json',
   '/background_top.png',
-  '/background_button.png'
+  '/background_button.png',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
+  // Força o novo Service Worker a ativar-se imediatamente
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+  );
+});
+
+self.addEventListener('activate', (event) => {
+  // Apaga caches antigas (como a pente-v1 e pente-v2 que guardaram o 404)
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+      );
+    })
   );
 });
 
