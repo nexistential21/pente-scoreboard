@@ -341,7 +341,7 @@ function closeInstallInstructions() {
 // --- CONTADOR DE VISITAS & ADMIN ---
 async function trackVisit() {
   try {
-    const res = await fetch(`https://api.counterapi.dev/v2/pente/pentevisits/up`, {
+    const res = await fetch(`https://api.counterapi.dev/v2/pente/pentevisits`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${COUNTER_API_KEY}`
