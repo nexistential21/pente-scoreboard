@@ -734,10 +734,9 @@
         });
     }
 
-    // Replace 'pente-app-unique-id' with a unique string for your project
-    const COUNTER_NAMESPACE = 'pente-app-unique-id';
+    const COUNTER_NAMESPACE = 'pente-v0.1';
     const COUNTER_KEY = 'visits';
-    const ADMIN_SECRET = 'mysecret123'; // Change this to your secret key
+    const ADMIN_SECRET = 'mysecret123'; 
 
     let currentVisitCount = null;
 
@@ -757,7 +756,6 @@
       }
     }
 
-    // 2. Render discrete badge floating in corner
     function renderAdminBadge(count) {
       let badge = document.getElementById('admin-visit-badge');
       if (!badge) {
@@ -782,7 +780,6 @@
       badge.innerText = `👁 Visitas: ${count}`;
     }
 
-    // 3. Secret Gesture: Click title 5 times to reveal counter on screen
     let titleClicks = 0;
     document.addEventListener('DOMContentLoaded', () => {
       trackVisit();
@@ -797,7 +794,7 @@
             } else {
               alert('A carregar contagem...');
             }
-            titleClicks = 0; // Reset counter
+            titleClicks = 0;
           }
         });
       }
