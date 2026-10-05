@@ -340,24 +340,23 @@ function closeInstallInstructions() {
 
 // --- CONTADOR DE VISITAS & ADMIN ---
 async function trackVisit() {
-  // Chave única do teu contador no CountAPI
   const UNIQUE_KEY = 'pente_me_visitors_v1';
-  const API_URL = `https://countapi.mileshilliard.com/api/v1/hit/${UNIQUE_KEY}`;
+  // O ?_t=${Date.now()} impede que o browser guarde a resposta em cache
+  const API_URL = `https://countapi.mileshilliard.com/api/v1/hit/${UNIQUE_KEY}?_t=${Date.now()}`;
 
   try {
-    const res = await fetch(API_URL);
+    const res = await fetch(API_URL, { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const data = await res.json();
     currentVisitCount = parseInt(data.value, 10);
   } catch (err) {
-    console.warn('Contador remoto indisponível. A usar backup local:', err.message);
+    console.warn('Contador remoto indisponível ou bloqueado. A usar backup local:', err.message);
     let localVisits = parseInt(localStorage.getItem('pente_local_visits') || '0', 10) + 1;
     localStorage.setItem('pente_local_visits', localVisits);
     currentVisitCount = localVisits;
   }
 
-  // Mostra o badge de admin apenas se o segredo estiver no URL (?admin=mysecret123)
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('admin') === ADMIN_SECRET && typeof renderAdminBadge === 'function') {
     renderAdminBadge(currentVisitCount);
