@@ -366,8 +366,8 @@ function renderAdminBadge(count) {
     badge.id = 'admin-visit-badge';
     badge.style.cssText = `
       position: fixed;
-      top: 10px;
-      right: 10px;
+      top: 20px;
+      right: 20px;
       background: rgba(0, 0, 0, 0.85);
       color: #D4AF37;
       border: 1px solid #D4AF37;
