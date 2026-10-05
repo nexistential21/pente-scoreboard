@@ -1,6 +1,7 @@
 // --- CONFIGURAÇÃO & ESTADO INICIAL ---
-const COUNTER_NAMESPACE = 'pente-v0.1';
-const COUNTER_KEY = 'visits';
+const COUNTER_NAMESPACE = 'pente';
+const COUNTER_KEY = 'pentevisits';
+const COUNTER_API_KEY = 'ut_6fPQ5sPXcxYv7A4IIzYqtyXMlGf7BwoDyyndpkfG';
 const ADMIN_SECRET = 'mysecret123';
 
 let currentVisitCount = null;
@@ -342,14 +343,18 @@ function closeInstallInstructions() {
 // --- CONTADOR DE VISITAS & ADMIN ---
 async function trackVisit() {
   try {
-    // CounterAPI v2 Endpoint
-    const res = await fetch('https://counterapi.dev/api/v1/counter?workspace=pente&name=visits&action=up');
-    
+    const res = await fetch(`https://api.counterapi.dev/v2/${COUNTER_NAMESPACE}/${COUNTER_KEY}/up`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${COUNTER_API_KEY}`
+      }
+    });
+
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-    
+
     const data = await res.json();
-    // v2 returns the updated count under data.up or data.count
-    currentVisitCount = data.up || data.count || data.value;
+    // A CounterAPI v2 devolve o valor no campo 'count' ou 'value'
+    currentVisitCount = data.count ?? data.value ?? data.up;
   } catch (err) {
     console.warn('Contador externo indisponível. A usar backup local:', err);
     let localVisits = parseInt(localStorage.getItem('pente_local_visits') || '0') + 1;
