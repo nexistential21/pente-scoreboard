@@ -1,5 +1,5 @@
 // sw.js
-const CACHE_NAME = 'pente-v5'; // Mudado para v3 para limpar a cache antiga
+const CACHE_NAME = 'pente-v6';
 const ASSETS = [
   '/',
   '/index.html',
