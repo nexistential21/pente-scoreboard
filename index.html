@@ -733,6 +733,75 @@
             .catch(err => console.log('Service Worker registration failed:', err));
         });
     }
+
+    // Replace 'pente-app-unique-id' with a unique string for your project
+    const COUNTER_NAMESPACE = 'pente-app-unique-id';
+    const COUNTER_KEY = 'visits';
+    const ADMIN_SECRET = 'mysecret123'; // Change this to your secret key
+
+    let currentVisitCount = null;
+
+    async function trackVisit() {
+      try {
+        const res = await fetch(`https://api.counterapi.dev/v1/${COUNTER_NAMESPACE}/${COUNTER_KEY}/up`);
+        const data = await res.json();
+        currentVisitCount = data.count;
+
+        // Auto-show if URL contains secret query (e.g., yoursite.com/?admin=mysecret123)
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('admin') === ADMIN_SECRET) {
+          renderAdminBadge(currentVisitCount);
+        }
+      } catch (err) {
+        console.error('Counter error:', err);
+      }
+    }
+
+    // 2. Render discrete badge floating in corner
+    function renderAdminBadge(count) {
+      let badge = document.getElementById('admin-visit-badge');
+      if (!badge) {
+        badge = document.createElement('div');
+        badge.id = 'admin-visit-badge';
+        badge.style.cssText = `
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          background: rgba(0, 0, 0, 0.85);
+          color: #D4AF37;
+          border: 1px solid #D4AF37;
+          padding: 4px 10px;
+          border-radius: 12px;
+          font-size: 0.75rem;
+          font-weight: bold;
+          z-index: 9999;
+          pointer-events: none;
+        `;
+        document.body.appendChild(badge);
+      }
+      badge.innerText = `👁 Visitas: ${count}`;
+    }
+
+    // 3. Secret Gesture: Click title 5 times to reveal counter on screen
+    let titleClicks = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+      trackVisit();
+
+      const titleElement = document.querySelector('.app-title');
+      if (titleElement) {
+        titleElement.addEventListener('click', () => {
+          titleClicks++;
+          if (titleClicks >= 5) {
+            if (currentVisitCount !== null) {
+              renderAdminBadge(currentVisitCount);
+            } else {
+              alert('A carregar contagem...');
+            }
+            titleClicks = 0; // Reset counter
+          }
+        });
+      }
+    });
   </script>
 </body>
 </html>
