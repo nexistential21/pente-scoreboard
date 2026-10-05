@@ -342,10 +342,14 @@ function closeInstallInstructions() {
 // --- CONTADOR DE VISITAS & ADMIN ---
 async function trackVisit() {
   try {
-    const res = await fetch(`https://api.counterapi.dev/v1/${COUNTER_NAMESPACE}/${COUNTER_KEY}/up`);
+    // CounterAPI v2 Endpoint
+    const res = await fetch('https://counterapi.dev/api/v1/counter?workspace=pente&name=visits&action=up');
+    
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    
     const data = await res.json();
-    currentVisitCount = data.count;
+    // v2 returns the updated count under data.up or data.count
+    currentVisitCount = data.up || data.count || data.value;
   } catch (err) {
     console.warn('Contador externo indisponível. A usar backup local:', err);
     let localVisits = parseInt(localStorage.getItem('pente_local_visits') || '0') + 1;
