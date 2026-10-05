@@ -1,6 +1,4 @@
 // --- CONFIGURAÇÃO & ESTADO INICIAL ---
-const COUNTER_NAMESPACE = 'pente';
-const COUNTER_KEY = 'pentevisits';
 const COUNTER_API_KEY = 'ut_6fPQ5sPXcxYv7A4IIzYqtyXMlGf7BwoDyyndpkfG';
 const ADMIN_SECRET = 'mysecret123';
 
@@ -343,7 +341,7 @@ function closeInstallInstructions() {
 // --- CONTADOR DE VISITAS & ADMIN ---
 async function trackVisit() {
   try {
-    const res = await fetch(`https://api.counterapi.dev/v2/${COUNTER_NAMESPACE}/${COUNTER_KEY}/up`, {
+    const res = await fetch(`https://api.counterapi.dev/v2/pente/pentevisits/up`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${COUNTER_API_KEY}`
