@@ -199,6 +199,17 @@ body {
 .team1 .card-deck { color: #1a1a1a; }
 .team2 .card-deck { color: #B22222; }
 
+.wins-badge {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--color-gold);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 12px;
+  padding: 2px 12px;
+  margin-top: 4px;
+}
+
 .canvas-container {
   width: 100%;
   background-image: url('background_button.png');

@@ -1,5 +1,5 @@
 // sw.js
-const CACHE_NAME = 'pente-v6';
+const CACHE_NAME = 'pente-v7';
 const ASSETS = [
   '/',
   '/index.html',
