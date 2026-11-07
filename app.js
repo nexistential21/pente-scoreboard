@@ -190,7 +190,8 @@ function showGameOver(winner) {
 function confirmQuitSeries(winner) {
   showModal(
     'Sair do Jogo',
-    'Se sair, o registo de jogos ganhos será apagado.\n\nTem a certeza que quer sair?',
+    `Resultado final:\n${gameState.team1Name} ${gameState.team1Wins} - ${gameState.team2Wins} ${gameState.team2Name}\n\n` +
+    `Se sair, o registo de jogos ganhos será apagado.\n\nTem a certeza que quer sair?`,
     exitToMenu,
     () => showGameOver(winner)
   );
