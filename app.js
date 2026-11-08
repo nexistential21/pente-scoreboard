@@ -15,8 +15,6 @@ const gameState = {
   team2NextPos: 1,
   team1Events: [],
   team2Events: [],
-  team1Wins: 0,
-  team2Wins: 0,
   history: []
 };
 
@@ -89,7 +87,7 @@ function startGame() {
 
   gameState.team1Name = t1 || 'Nós';
   gameState.team2Name = t2 || 'Vós';
-  gameState.maxScore = isNaN(maxVal) ? 10 : Math.max(maxVal, 1);
+  gameState.maxScore = isNaN(maxVal) ? 10 : Math.min(Math.max(maxVal, 1), 10);
 
   dismissInstallToast();
 
@@ -107,7 +105,7 @@ function startGame() {
   document.getElementById('menu-screen').classList.add('hidden');
   document.getElementById('game-screen').classList.remove('hidden');
 
-  resetSeries();
+  resetGame();
   requestAnimationFrame(drawTrack);
 }
 
@@ -160,61 +158,23 @@ function undoLastAction() {
 }
 
 function checkWinner() {
-  let winner = null;
   if (gameState.team1Score >= gameState.maxScore) {
-    winner = 1;
-    gameState.team1Wins++;
+    showModal('Fim do Jogo!', `Parabéns, ${gameState.team1Name} venceu por ${gameState.team1Score}-${gameState.team2Score}!\n\nDeseja jogar novamente?`, resetGame, exitToMenu);
   } else if (gameState.team2Score >= gameState.maxScore) {
-    winner = 2;
-    gameState.team2Wins++;
+    showModal('Fim do Jogo!', `Parabéns, ${gameState.team2Name} venceu por ${gameState.team2Score}-${gameState.team1Score}!\n\nDeseja jogar novamente?`, resetGame, exitToMenu);
   }
-  if (!winner) return;
-
-  updateUI();
-  showGameOver(winner);
 }
 
-function showGameOver(winner) {
-  const wName  = winner === 1 ? gameState.team1Name : gameState.team2Name;
-  const wScore = winner === 1 ? gameState.team1Score : gameState.team2Score;
-  const lScore = winner === 1 ? gameState.team2Score : gameState.team1Score;
-
-  const text =
-    `Parabéns, ${wName} venceu por ${wScore}-${lScore}!\n\n` +
-    `Jogos ganhos:\n${gameState.team1Name} ${gameState.team1Wins} - ${gameState.team2Wins} ${gameState.team2Name}\n\n` +
-    `Deseja jogar novamente?`;
-
-  showModal('Fim do Jogo!', text, resetGame, () => confirmQuitSeries(winner));
-}
-
-function confirmQuitSeries(winner) {
-  showModal(
-    'Sair do Jogo',
-    `Resultado final:\n${gameState.team1Name} ${gameState.team1Wins} - ${gameState.team2Wins} ${gameState.team2Name}\n\n` +
-    `Se sair, o registo de jogos ganhos será apagado.\n\nTem a certeza que quer sair?`,
-    exitToMenu,
-    () => showGameOver(winner)
-  );
-}
-
-// Resets only the current game (keeps the tally)
 function resetGame() {
   gameState.team1Score = 0; gameState.team2Score = 0;
   gameState.team1NextPos = 1; gameState.team2NextPos = 1;
   gameState.team1Events = []; gameState.team2Events = [];
-  gameState.history = [];
+  gameState.history = []; 
   updateUI();
 }
 
-// Resets the game and the tally
-function resetSeries() {
-  gameState.team1Wins = 0;
-  gameState.team2Wins = 0;
-  resetGame();
-}
-
 function exitToMenu() {
-  resetSeries();
+  resetGame();
   document.getElementById('game-screen').classList.add('hidden');
   document.getElementById('menu-screen').classList.remove('hidden');
 }
@@ -222,8 +182,6 @@ function exitToMenu() {
 function updateUI() {
   document.getElementById('display-team1-score').innerText = gameState.team1Score;
   document.getElementById('display-team2-score').innerText = gameState.team2Score;
-  document.getElementById('display-team1-wins').innerText = gameState.team1Wins;
-  document.getElementById('display-team2-wins').innerText = gameState.team2Wins;
   drawTrack();
 }
 
